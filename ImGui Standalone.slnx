@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="ImGui Standalone/ImGui Standalone.vcxproj" />
+  <Project Path="ImGui Standalone/ImGui Standalone.vcxproj" Id="e5fb3fe9-1ddc-4df1-b79b-2873254b89f5" />
 </Solution>

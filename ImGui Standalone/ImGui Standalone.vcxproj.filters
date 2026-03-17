@@ -16,6 +16,9 @@
     <Filter Include="ImGui">
       <UniqueIdentifier>{d96a68af-be82-4e22-bd29-24c4b42dd580}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fonts">
+      <UniqueIdentifier>{74387106-51f3-4f86-91e9-40d1926cad0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Drawing.cpp">
@@ -83,8 +86,28 @@
     <ClInclude Include="ImGui\imstb_truetype.h">
       <Filter>ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="Fonts\fa-regular-400.h">
+      <Filter>Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="Fonts\fa-solid-900.h">
+      <Filter>Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="Fonts\IconsFontAwesome6.h">
+      <Filter>Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\ImGuiNotify.hpp">
+      <Filter>ImGui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Fonts\fa-regular-400.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Fonts\fa-solid-900.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

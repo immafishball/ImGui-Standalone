@@ -105,7 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;$(ProjectDir)Menu;$(ProjectDir)\ImGui;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;$(ProjectDir)Menu;$(ProjectDir)\ImGui;$(ProjectDir)\Fonts;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,8 +141,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drawing.h" />
+    <ClInclude Include="Fonts\fa-regular-400.h" />
+    <ClInclude Include="Fonts\fa-solid-900.h" />
+    <ClInclude Include="Fonts\IconsFontAwesome6.h" />
     <ClInclude Include="ImGui\imconfig.h" />
     <ClInclude Include="ImGui\imgui.h" />
+    <ClInclude Include="ImGui\ImGuiNotify.hpp" />
     <ClInclude Include="ImGui\imgui_impl_dx11.h" />
     <ClInclude Include="ImGui\imgui_impl_win32.h" />
     <ClInclude Include="ImGui\imgui_internal.h" />
@@ -154,6 +158,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Fonts\fa-regular-400.ttf" />
+    <Font Include="Fonts\fa-solid-900.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
