@@ -17,6 +17,8 @@ bool                        UI::g_SwapChainOccluded = false;
 UINT                        UI::g_ResizeWidth = 0, UI::g_ResizeHeight = 0;
 ID3D11RenderTargetView*     UI::g_mainRenderTargetView = nullptr;
 
+HMODULE                     UI::hCurrentModule = nullptr;
+
 // Main code
 void UI::Render()
 {
@@ -26,14 +28,14 @@ void UI::Render()
 
     // Create application window
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"ImGui Example", nullptr };
-    ::RegisterClassExW(&wc);
-    HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Dear ImGui DirectX11 Example", WS_OVERLAPPEDWINDOW, 100, 100, 50, 50, nullptr, nullptr, wc.hInstance, nullptr);
+    ::RegisterClassEx(&wc);
+    HWND hwnd = ::CreateWindowEx(WS_EX_TOPMOST | WS_EX_TOOLWINDOW, wc.lpszClassName, _T("Dear ImGui DirectX11 Example"), WS_POPUP, 100, 100, 50, 50, NULL, NULL, wc.hInstance, NULL);
 
     // Initialize Direct3D
     if (!CreateDeviceD3D(hwnd))
     {
         CleanupDeviceD3D();
-        ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
+        ::UnregisterClass(wc.lpszClassName, wc.hInstance);
         return;
     }
 
@@ -47,12 +49,16 @@ void UI::Render()
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
     //io.ConfigViewportsNoAutoMerge = true;
     //io.ConfigViewportsNoTaskBarIcon = true;
     //io.ConfigDockingAlwaysTabBar = true;
     //io.ConfigDockingTransparentPayload = true;
+    //io.ConfigErrorRecoveryEnableAssert = false;               // Disable assertions
+    //io.ConfigErrorRecoveryEnableTooltip = false;              // Disable error tooltip
+    //io.ConfigDebugHighlightIdConflicts = false;
+    io.IniFilename = nullptr;                                   // Disable .ini file saving/loading
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
@@ -137,10 +143,9 @@ void UI::Render()
         ImGui_ImplDX11_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
-        //{
+        {
             Drawing::Draw();
-        //}
-        //ImGui::EndFrame();
+        }
 
         #ifdef _DEMO_IMGUI
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
@@ -198,7 +203,7 @@ void UI::Render()
         // Present
         HRESULT hr = g_pSwapChain->Present(1, 0);   // Present with vsync
         //HRESULT hr = g_pSwapChain->Present(0, 0); // Present without vsync
-        //g_SwapChainOccluded = (hr == DXGI_STATUS_OCCLUDED);
+        g_SwapChainOccluded = (hr == DXGI_STATUS_OCCLUDED);
 
         #ifndef _WINDLL
             if (!Drawing::isActive())
@@ -213,9 +218,11 @@ void UI::Render()
 
     CleanupDeviceD3D();
     ::DestroyWindow(hwnd);
-    ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
+    ::UnregisterClass(wc.lpszClassName, wc.hInstance);
 
-    return;
+#ifdef _WINDLL
+    CreateThread(nullptr, NULL, (LPTHREAD_START_ROUTINE)FreeLibrary, hCurrentModule, NULL, nullptr);
+#endif
 }
 
 // Helper functions
